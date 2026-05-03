@@ -1,173 +1,228 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Assistant</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>AI Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
 
-    body {
-      background: #0f172a;
-      display: flex;
-      height: 100vh;
-      color: #e2e8f0;
-    }
+body {
+  background: linear-gradient(135deg, #0f172a, #020617);
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  color: #e2e8f0;
+}
 
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      height: 95vh;
-      background: #020617;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
+/* Container */
+.container {
+  width: 100%;
+  max-width: 850px;
+  height: 92vh;
+  background: rgba(2, 6, 23, 0.9);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  overflow: hidden;
+}
 
-    header {
-      padding: 16px;
-      background: #020617;
-      border-bottom: 1px solid #1e293b;
-      font-size: 18px;
-      font-weight: 600;
-    }
+/* Header */
+header {
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #1e293b;
+  background: rgba(15, 23, 42, 0.6);
+  letter-spacing: 0.5px;
+}
 
-    .chat-box {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
+/* Chat Area */
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 
-    .message {
-      margin-bottom: 16px;
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      line-height: 1.4;
-    }
+/* Messages */
+.message {
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  max-width: 75%;
+  line-height: 1.5;
+  animation: fadeIn 0.25s ease;
+}
 
-    .user {
-      background: #2563eb;
-      align-self: flex-end;
-      margin-left: auto;
-    }
+.user {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
 
-    .bot {
-      background: #1e293b;
-      align-self: flex-start;
-    }
+.bot {
+  background: #1e293b;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
 
-    .input-area {
-      display: flex;
-      padding: 12px;
-      border-top: 1px solid #1e293b;
-      background: #020617;
-    }
+/* Input Area */
+.input-area {
+  display: flex;
+  padding: 14px;
+  border-top: 1px solid #1e293b;
+  background: rgba(2, 6, 23, 0.95);
+}
 
-    input {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      background: #1e293b;
-      color: white;
-      font-size: 14px;
-    }
+input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  background: #0f172a;
+  color: white;
+  font-size: 14px;
+  transition: 0.2s;
+}
 
-    button {
-      margin-left: 10px;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+input:focus {
+  border-color: #2563eb;
+}
 
-    button:hover {
-      background: #1d4ed8;
-    }
-  </style>
+button {
+  margin-left: 10px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+}
+
+/* Typing Indicator */
+.typing {
+  display: flex;
+  gap: 5px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  background: #94a3b8;
+  border-radius: 50%;
+  animation: blink 1.4s infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollbar */
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <header>AI Assistant</header>
+  <header>🤖 AI Assistant</header>
 
   <div class="chat-box" id="chatBox"></div>
 
   <div class="input-area">
-    <input id="userInput" placeholder="Ask about weather, exchange rates, news..." />
+    <input id="userInput" placeholder="Ask something..." />
     <button onclick="sendMessage()">Send</button>
   </div>
 </div>
 
 <script>
-  const chatBox = document.getElementById("chatBox");
+const chatBox = document.getElementById("chatBox");
 
-  function addMessage(text, type) {
-    const msg = document.createElement("div");
-    msg.classList.add("message", type);
-    msg.innerText = text;
-    chatBox.appendChild(msg);
-    chatBox.scrollTop = chatBox.scrollHeight;
+function addMessage(content, type) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", type);
+
+  if (content === "typing") {
+    msg.innerHTML = `
+      <div class="typing">
+        <span></span><span></span><span></span>
+      </div>`;
+  } else {
+    msg.innerText = content;
   }
 
-  async function sendMessage() {
-    const input = document.getElementById("userInput");
-    const text = input.value.trim();
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-    if (!text) return;
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
 
-    addMessage(text, "user");
-    input.value = "";
+  if (!text) return;
 
-    // LOADING STATE
-    addMessage("Typing...", "bot");
+  addMessage(text, "user");
+  input.value = "";
 
-    try {
-      // 🔥 Replace with your backend endpoint
-      const response = await fetch("http://localhost:5000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: text })
-      });
+  addMessage("typing", "bot");
 
-      const data = await response.json();
+  try {
+    const response = await fetch("http://localhost:5000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: text })
+    });
 
-      // Remove "Typing..."
-      chatBox.removeChild(chatBox.lastChild);
+    const data = await response.json();
 
-      addMessage(data.response, "bot");
+    chatBox.removeChild(chatBox.lastChild);
+    addMessage(data.response, "bot");
 
-    } catch (error) {
-      chatBox.removeChild(chatBox.lastChild);
-      addMessage("Error connecting to server.", "bot");
-    }
+  } catch (error) {
+    chatBox.removeChild(chatBox.lastChild);
+    addMessage("Server error. Please try again.", "bot");
   }
+}
 
-  // Enter key support
-  document.getElementById("userInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  });
+document.getElementById("userInput").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
 </script>
 
 </body>
