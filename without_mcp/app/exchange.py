@@ -1,6 +1,5 @@
 import requests
 
-
 def get_exchange_rate(frm, to):
 
     url = f"https://open.er-api.com/v6/latest/{frm}"
